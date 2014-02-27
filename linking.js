@@ -37,15 +37,18 @@ sara_shape.drag(move, start, up);
 
 Raphael.fn.connect = function(obj1, obj2, colour) {
     // list of paths each object has
-    obj1.connections = []
-    obj2.connections = []
+     if (!obj1.connections) obj1.connections = []
+     if (!obj2.connections) obj2.connections = []
+     _.each(obj1.connections, function(line){line.remove()})
+   _.each(obj2.connections, function(line){line.remove()})
+
     // if (!obj1.connections) obj1.connections = [] && if (!obj2.connections) obj2.connections = [])
     // get the bounding box of each object
     var box1 = obj1.getBBox()
     var box2 = obj2.getBBox()
     // create a line/path from object 1 to object 2
     var p = this.path("M" + (box1.x + box1.width / 2) + ","
-            + (box1.y + box1.height / 2) + "L" + (box2.x + box2.width / 2)
+            + (box1.y + box1.height / 2) + "L " + (box2.x + box2.width / 2)
             + "," + (box2.y + box2.height / 2))
     // adjust attributes of the path
     p.attr({
